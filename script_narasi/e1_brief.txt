@@ -1,0 +1,1 @@
+Percobaan satu: Model Matahari, Bumi, dan Bulan. Geser posisi Bulan mengelilingi Bumi dan putar Bumi pada porosnya. Amati posisi ketiga benda langit ini secara bergantian.
