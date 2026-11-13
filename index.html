@@ -1,0 +1,1039 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+<title>Laboratorium Maya IPAS — Rotasi dan Revolusi Bumi | IPAS SD Kelas VI</title>
+<link rel="icon" type="image/svg+xml" href="assets/icons/favicon.svg">
+<link rel="stylesheet" href="css/style.css?v=4">
+<link rel="stylesheet" href="css/animation.css">
+<link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+
+<!-- ================= LAYAR MUAT AWAL ================= -->
+<div id="bootLoader" role="status" aria-live="polite" aria-label="Memuat aset aplikasi">
+  <div class="boot-card">
+    <div class="boot-orbit"><div class="bo-ring"></div><div class="bo-core"></div></div>
+    <div class="boot-title">LABORATORIUM MAYA IPAS<br><small>ROTASI DAN REVOLUSI BUMI</small></div>
+    <div class="boot-bar"><span class="boot-fill" id="bootFill"></span></div>
+    <div class="boot-sub" id="bootSub">Memuat aset… 0%</div>
+  </div>
+</div>
+
+<div id="stage">
+  <canvas id="starbg" aria-hidden="true"></canvas>
+
+  <!-- ================= SIDEBAR NAVIGASI ================= -->
+  <aside id="sidebar" class="on-splash">
+    <div class="sb-logo" id="sbLogo" role="button" tabindex="0" title="Kembali ke Beranda">
+      <img src="assets/icons/favicon.svg" alt="Logo Laboratorium Maya IPAS">
+    </div>
+    <div class="sb-sep"></div>
+    <button class="sb-item" data-nav="p01" title="Beranda Laboratorium"><span data-icon="home"></span>Beranda</button>
+    <button class="sb-item" data-nav="p03" title="Galeri Tata Surya"><span data-icon="planet"></span>Galeri Tata Surya</button>
+    <button class="sb-item" data-nav="p04" title="Lab Rotasi Bumi"><span data-icon="rotate"></span>Lab Rotasi</button>
+    <button class="sb-item" data-nav="p05" title="Lab Revolusi Bumi"><span data-icon="orbit"></span>Lab Revolusi</button>
+    <button class="sb-item" data-nav="p06" title="Lab Zona Waktu"><span data-icon="clock"></span>Lab Zona Waktu</button>
+    <button class="sb-item" data-nav="p07" title="Lab Pergantian Musim"><span data-icon="season"></span>Lab Musim</button>
+    <button class="sb-item" data-nav="p08" title="Ruang Eksperimen Virtual"><span data-icon="flask"></span>Eksperimen</button>
+    <button class="sb-item" data-nav="p09" title="Evaluasi Pemahaman"><span data-icon="quiz"></span>Evaluasi</button>
+    <button class="sb-item" data-nav="p10" title="Refleksi"><span data-icon="journal"></span>Refleksi</button>
+    <div class="sb-push">
+      <div class="sb-sep"></div>
+      <button class="sb-item" data-nav="p02" title="Cara Menggunakan"><span data-icon="help"></span>Petunjuk</button>
+      <button class="sb-item" data-nav="p11" title="Kredit dan Referensi"><span data-icon="book"></span>Referensi</button>
+      <button class="sb-item" data-nav="p12" title="Pengembang"><span data-icon="user"></span>Pengembang</button>
+    </div>
+  </aside>
+
+  <div id="maincol" class="on-splash">
+
+    <!-- ================= HEADER ================= -->
+    <header id="topbar2" class="on-splash">
+      <div class="tb-crumb">
+        <span class="tb-lab" id="tbLab"></span>
+        <span class="tb-title" id="tbTitle"></span>
+      </div>
+      <div class="tb-push">
+        <button class="ctlbtn" id="btnNarasi" title="Ulangi Narasi Halaman Ini" data-icon="ulangnarasi"></button>
+        <button class="ctlbtn" id="btnSound" title="Pengaturan Suara" data-icon="speaker"></button>
+        <button class="ctlbtn" id="btnFullscreen" title="Layar Penuh (IFP / proyektor)" data-icon="expand"></button>
+      </div>
+    </header>
+
+    <main id="pages">
+
+    <!-- ============ HALAMAN 00 — PEMBUKA ============ -->
+    <section class="page splash active" id="p00">
+      <div class="splash-left">
+        <div class="splash-badge">LABORATORIUM MAYA IPAS</div>
+        <h1 class="splash-title">ROTASI &amp;<br>REVOLUSI BUMI<span class="hl">MENGEMBARA DI JAGAT RAYA</span></h1>
+        <div class="splash-sub">Ilmu Pengetahuan Alam dan Sosial · SD/MI Kelas VI</div>
+        <div class="splash-pemantik">
+          <b>PERTANYAAN PEMANTIK</b><br>
+          Pernahkah kamu mengamati Matahari dan Bulan bergantian muncul di langit?
+          Ke mana perginya Matahari saat terbenam? Mengapa Bulan selalu muncul
+          atau terbit dari arah yang sama?
+        </div>
+        <p class="splash-text">
+          Kamu adalah <b>Peneliti Muda</b>. Di laboratorium ini kamu akan mengamati model 3D,
+          mengoperasikan simulasi, mengubah variabel, melakukan percobaan, dan menarik
+          kesimpulan tentang gerak Bumi — seperti ilmuwan sungguhan!
+        </p>
+        <div class="splash-actions hidden" id="splashActions">
+          <button class="btn big cyan" id="btnMulai" data-icon="play"><span>MULAI MENYELIDIKI</span></button>
+          <button class="btn big ghost" id="btnSplashHelp" data-icon="help"><span>CARA MENGGUNAKAN</span></button>
+        </div>
+      </div>
+      <div class="splash-right">
+        <div class="splash-ring floaty"></div>
+        <canvas id="p00Canvas"></canvas>
+        <div class="splash-hint" id="splashHint" role="status">
+          <b>KLIK BUMI UNTUK MEMULAI</b>
+          <small>Narasi sambutan dan musik latar akan terdengar setelah Bumi diklik.</small>
+        </div>
+      </div>
+      <div class="splash-credit">Materi diadaptasi dari buku <i>Ilmu Pengetahuan Alam dan Sosial untuk SD/MI Kelas VI</i> — Amalia Fitri, Ati Haviati Oktora, Ekatannia Tresnasari, &amp; Maria Jeanindya Wahyudi. Kemendikdasmen RI, 2025 · Bab 6: <i>Mengembara di Jagat Raya</i></div>
+    </section>
+
+    <!-- ============ HALAMAN 01 — BERANDA ============ -->
+    <section class="page" id="p01">
+      <div class="home-head">
+        <h1>SELAMAT DATANG DI <span>LABORATORIUM MAYA IPAS</span></h1>
+        <p>Pilih ruang pengamatan dan mulailah menyelidiki rotasi &amp; revolusi Bumi!</p>
+      </div>
+      <div class="panel home-progress rise rise-1">
+        <span class="hp-label" data-icon="gauge">PROGRES KUNJUNGAN</span>
+        <div class="hp-dots" id="hpDots"></div>
+        <span class="hp-score" id="hpScore"></span>
+      </div>
+      <div class="home-grid">
+        <button class="menucard rise rise-2" data-nav="p03">
+          <span class="mc-icon" data-icon="planet"></span>
+          <span class="mc-title">GALERI TATA SURYA</span>
+          <span class="mc-desc">Amati Matahari, Bumi, Bulan, dan planet dalam model 3D.</span>
+          <span class="mc-go">MASUK <span data-icon="chevR"></span></span>
+        </button>
+        <button class="menucard rise rise-3" data-nav="p04">
+          <span class="mc-flag">LAB 01</span>
+          <span class="mc-icon" data-icon="rotate"></span>
+          <span class="mc-title">LAB ROTASI BUMI</span>
+          <span class="mc-desc">Putar Bumi dan amati siang-malam serta gerak semu Matahari.</span>
+          <span class="mc-go">MASUK <span data-icon="chevR"></span></span>
+        </button>
+        <button class="menucard rise rise-4" data-nav="p05">
+          <span class="mc-flag">LAB 02</span>
+          <span class="mc-icon" data-icon="orbit"></span>
+          <span class="mc-title">LAB REVOLUSI BUMI</span>
+          <span class="mc-desc">Jelajahi orbit elips, perihelion, dan aphelion.</span>
+          <span class="mc-go">MASUK <span data-icon="chevR"></span></span>
+        </button>
+        <button class="menucard rise rise-5" data-nav="p06">
+          <span class="mc-flag">LAB 03</span>
+          <span class="mc-icon" data-icon="clock"></span>
+          <span class="mc-title">LAB ZONA WAKTU</span>
+          <span class="mc-desc">Bandingkan jam WIB, WITA, dan WIT di peta Indonesia.</span>
+          <span class="mc-go">MASUK <span data-icon="chevR"></span></span>
+        </button>
+        <button class="menucard rise rise-6" data-nav="p07">
+          <span class="mc-flag">LAB 04</span>
+          <span class="mc-icon" data-icon="season"></span>
+          <span class="mc-title">LAB PERGANTIAN MUSIM</span>
+          <span class="mc-desc">Lihat musim dua belahan Bumi karena kemiringan sumbu.</span>
+          <span class="mc-go">MASUK <span data-icon="chevR"></span></span>
+        </button>
+        <button class="menucard rise rise-7" data-nav="p08">
+          <span class="mc-flag pu">LAB 05</span>
+          <span class="mc-icon pu" data-icon="flask"></span>
+          <span class="mc-title">RUANG EKSPERIMEN</span>
+          <span class="mc-desc">Lima percobaan virtual untuk kamu jalankan sendiri.</span>
+          <span class="mc-go">MASUK <span data-icon="chevR"></span></span>
+        </button>
+        <button class="menucard rise rise-8" data-nav="p09">
+          <span class="mc-flag">UJIAN</span>
+          <span class="mc-icon" data-icon="quiz"></span>
+          <span class="mc-title">EVALUASI</span>
+          <span class="mc-desc">15 soal beragam dengan umpan balik, skor, dan pembahasan.</span>
+          <span class="mc-go">MASUK <span data-icon="chevR"></span></span>
+        </button>
+        <div class="menucard" style="cursor:default;pointer-events:none;background:linear-gradient(165deg,rgba(255,255,255,.85),rgba(238,246,254,.85));border-style:dashed;justify-content:center;align-items:center;gap:4px">
+          <span class="mc-icon" style="width:44px;height:44px"><span data-icon="telescope"></span></span>
+          <span class="mc-desc" style="text-align:center;flex:0 0 auto">Selamat menyelidiki,<br><b style="color:var(--ink)">Peneliti Muda!</b></span>
+        </div>
+      </div>
+      <div class="home-grid2">
+        <button class="menucard rise rise-2" data-nav="p10">
+          <span class="mc-icon" data-icon="journal"></span>
+          <span class="mc-body">
+            <span class="mc-title">REFLEKSI PENELITI MUDA</span>
+            <span class="mc-desc">Catat hal yang sudah dipahami dan yang masih membingungkan.</span>
+            <span class="mc-go">TULIS <span data-icon="chevR"></span></span>
+          </span>
+        </button>
+        <button class="menucard rise rise-3" data-nav="p02">
+          <span class="mc-icon" data-icon="help"></span>
+          <span class="mc-body">
+            <span class="mc-title">CARA MENGGUNAKAN</span>
+            <span class="mc-desc">Papan petunjuk seluruh fitur laboratorium.</span>
+            <span class="mc-go">BUKA <span data-icon="chevR"></span></span>
+          </span>
+        </button>
+        <button class="menucard rise rise-4" data-nav="p11">
+          <span class="mc-icon" data-icon="book"></span>
+          <span class="mc-body">
+            <span class="mc-title">KREDIT &amp; REFERENSI</span>
+            <span class="mc-desc">Sumber materi dan aset media.</span>
+            <span class="mc-go">BUKA <span data-icon="chevR"></span></span>
+          </span>
+        </button>
+      </div>
+    </section>
+
+    <!-- ============ HALAMAN 02 — PETUNJUK ============ -->
+    <section class="page" id="p02">
+      <div class="home-head">
+        <h1>CARA MENGGUNAKAN <span>LABORATORIUM</span></h1>
+        <p>Klik setiap kartu untuk melihat langkah-langkahnya.</p>
+      </div>
+      <div class="hint-grid" id="hintGrid"></div>
+    </section>
+
+    <!-- ============ HALAMAN 03 — GALERI TATA SURYA ============ -->
+    <section class="page" id="p03">
+      <div class="lab-layout">
+        <div class="lab-view">
+          <div class="canvas-hold scan">
+            <canvas id="p03Canvas"></canvas>
+            <div class="canvas-tip">Seret untuk memutar · Roda tetikus / cubit dua jari untuk zoom · Klik objek untuk memilih</div>
+          </div>
+        </div>
+        <aside class="lab-panel">
+          <div class="panel">
+            <div class="panel-head"><span data-icon="layers"></span>OBJEK PENGAMATAN</div>
+            <div class="panel-body">
+              <div class="gal-list" id="galList"></div>
+              <div class="ctrl-grid" style="margin-top:10px">
+                <button class="btn small cyan span2" id="galPlay" data-icon="pause"><span>JEDA</span></button>
+                <div class="crow" style="grid-column:span 2;margin:0">
+                  <span class="lbl">Kecepatan orbit</span>
+                  <input type="range" class="sl" id="galSpeed" min="0.2" max="4" step="0.1" value="1">
+                </div>
+                <button class="btn small ghost" id="galTglLabel">LABEL</button>
+                <button class="btn small ghost" id="galTglOrbit">GARIS ORBIT</button>
+                <button class="btn small ghost span2" id="galCmp" data-icon="compare"><span>MODE PERBANDINGAN UKURAN</span></button>
+                <button class="btn small amber span2" id="galReset" data-icon="reset"><span>TAMPILAN AWAL</span></button>
+              </div>
+            </div>
+          </div>
+          <div class="panel" id="galInfoPanel">
+            <div class="panel-head"><span data-icon="info"></span>INFORMASI OBJEK</div>
+            <div class="panel-body" id="galInfo"></div>
+          </div>
+          <div class="panel hidden" id="galCmpPanel">
+            <div class="panel-head"><span data-icon="compare"></span>PERBANDINGAN UKURAN</div>
+            <div class="panel-body" id="galCmpBody"></div>
+          </div>
+          <div class="note">
+            <span data-icon="bulb"></span>
+            <span>Matahari adalah <b>pusat tata surya</b>. Gaya gravitasinya — hampir <b>30×</b> gravitasi Bumi —
+            membuat Bumi dan tujuh planet lain bergerak mengelilinginya.</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ HALAMAN 04 — LAB ROTASI ============ -->
+    <section class="page" id="p04">
+      <div class="lab-layout">
+        <div class="lab-view">
+          <div class="canvas-hold scan">
+            <canvas id="p04Canvas"></canvas>
+            <div class="hud tl">
+              <div class="hud-card">
+                <div class="hud-label">JAM SIMULASI (JAKARTA)</div>
+                <div class="hud-value" id="rotClock">06.00</div>
+                <div class="hud-label">1 PUTARAN = ±24 JAM</div>
+              </div>
+            </div>
+            <div class="hud bl">
+              <div class="hud-card">
+                <div class="hud-label">PENGAMAT DI JAKARTA</div>
+                <div class="hud-value day" id="rotStatus">SIANG</div>
+                <div class="hud-label" id="rotStatusSub">Pagi — Matahari terbit di timur</div>
+              </div>
+            </div>
+            <div class="hud tr">
+              <div class="hud-card">
+                <div class="hud-label">GERAK SEMU MATAHARI</div>
+                <svg viewBox="0 0 156 100" width="150" height="96">
+                  <path d="M 16 86 A 62 62 0 0 1 140 86" fill="none" stroke="#20456e" stroke-width="2" stroke-dasharray="4 4"/>
+                  <circle id="rotSun" cx="78" cy="24" r="9" fill="#ffc44d" stroke="#fff3c4" stroke-width="2"/>
+                  <text x="10" y="98" fill="#7fa8d8" font-size="9" font-weight="700">TIMUR</text>
+                  <text x="122" y="98" fill="#7fa8d8" font-size="9" font-weight="700">BARAT</text>
+                  <text x="78" y="97" fill="#5f7ba6" font-size="8" font-weight="600" text-anchor="middle">tengah hari</text>
+                </svg>
+              </div>
+            </div>
+            <div class="canvas-tip">Seret untuk memutar sudut pandang · Matahari (sumber cahaya) ada di arah kanan — seret untuk melihatnya</div>
+          </div>
+        </div>
+        <aside class="lab-panel">
+          <div class="panel">
+            <div class="panel-head"><span data-icon="rotate"></span>KONTROL ROTASI</div>
+            <div class="panel-body">
+              <div class="ctrl-grid">
+                <button class="btn cyan span2" id="rotPlay" data-icon="play"><span>PUTAR</span></button>
+                <div class="crow" style="grid-column:span 2">
+                  <span class="lbl">Kecepatan</span>
+                  <input type="range" class="sl" id="rotSpeed" min="0.5" max="12" step="0.5" value="3">
+                  <span class="val" id="rotSpeedVal">3 jam/dtk</span>
+                </div>
+                <button class="btn small ghost" id="rotTglAxis">GARIS SUMBU</button>
+                <button class="btn small ghost" id="rotTglArrow">PANAH ARAH</button>
+                <button class="btn small ghost span2" id="rotFollow" data-icon="eye"><span>IKUTI JAKARTA</span></button>
+                <button class="btn small amber span2" id="rotReset" data-icon="reset"><span>RESET SIMULASI</span></button>
+              </div>
+              <div style="margin-top:10px">
+                <div class="lbl" style="font-family:var(--font-ui);font-weight:600;font-size:12px;color:var(--ink2);margin-bottom:5px">LOMPAT KE JAM:</div>
+                <div class="chips" id="rotPresets">
+                  <button class="chip" data-t="6">06.00</button>
+                  <button class="chip" data-t="9">09.00</button>
+                  <button class="chip on" data-t="12">12.00</button>
+                  <button class="chip" data-t="15">15.00</button>
+                  <button class="chip" data-t="18">18.00</button>
+                  <button class="chip" data-t="21">21.00</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><span data-icon="eye"></span>PANEL PENGAMATAN</div>
+            <div class="panel-body" id="rotObs"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><span data-icon="layers"></span>LEGENDA SIMULASI</div>
+            <div class="panel-body">
+              <div class="kv"><span><i style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#b79bff;margin-right:5px"></i>Garis ungu + kerucut</span><b><b style="color:#7b52cc">Garis sumbu rotasi</b> (poros Bumi). Kerucut di ujungnya = penanda ujung poros keluar kutub</b></div>
+              <div class="kv"><span><i style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ffb02e;margin-right:5px"></i>Panah oranye (kerucut)</span><b><b style="color:#c77f00">Arah rotasi</b>: barat ke timur — berlawanan arah jarum jam. Kerucut oranye = ujung panahnya</b></div>
+              <div class="kv"><span><i style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#37e6ff;margin-right:5px"></i>Pin biru</span><b>Posisi pengamat di Jakarta</b></div>
+              <div class="kv"><span><i style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#2f7fd0;margin-right:5px"></i>Bola Bumi</span><b>Peta Bumi: biru = lautan, hijau = daratan/pulau, putih = es di kutub</b></div>
+              <div class="kv"><span><i style="display:inline-block;width:10px;height:10px;border-radius:50%;background:#ffd53e;margin-right:5px"></i>Bola kuning besar</span><b>Matahari — sumber cahaya siang</b></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><span data-icon="bulb"></span>ROTASI BUMI</div>
+            <div class="panel-body">
+              <div class="kv"><span>Rotasi</span><b>Perputaran Bumi pada porosnya</b></div>
+              <div class="kv"><span>Arah</span><b>Berlawanan arah jarum jam</b></div>
+              <div class="kv"><span>Durasi</span><b class="hl">23 jam 56 menit / putaran</b></div>
+              <div class="kv"><span>Sifat gerak</span><b>Konstan &amp; stabil — kita tidak merasakannya</b></div>
+              <div class="note" style="margin-top:9px">
+                <span data-icon="info"></span>
+                <span>Seperti berada di kendaraan yang melaju <b>konstan dan stabil</b>, kita tidak merasakan gerakan Bumi.</span>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><span data-icon="star"></span>AKIBAT ROTASI BUMI</div>
+            <div class="panel-body">
+              <div class="kv"><span>1</span><b>Terjadinya siang dan malam</b></div>
+              <div class="kv"><span>2</span><b>Gerak semu harian Matahari</b></div>
+              <div class="kv"><span>3</span><b>Perbedaan waktu antarwilayah</b></div>
+              <div class="note purple" style="margin-top:9px">
+                <span data-icon="bulb"></span>
+                <span>Bagian Bumi yang <b>menghadap Matahari</b> mengalami siang; yang <b>menjauhi</b> mengalami malam.
+                Daerah khatulistiwa (termasuk Indonesia) mengalami siang dan malam sekitar <b>12 jam</b>.</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ HALAMAN 05 — LAB REVOLUSI ============ -->
+    <section class="page" id="p05">
+      <div class="lab-layout">
+        <div class="lab-view">
+          <div class="canvas-hold scan">
+            <canvas id="p05Canvas"></canvas>
+            <div class="hud tl">
+              <div class="hud-card">
+                <div class="hud-label">POSISI REVOLUSI</div>
+                <div class="hud-value" id="revDay">HARI KE-4</div>
+                <div class="hud-label" id="revMonth">JANUARI</div>
+              </div>
+            </div>
+            <div class="hud tr">
+              <div class="hud-card">
+                <div class="hud-label">JARAK KE MATAHARI</div>
+                <div class="hud-value day" id="revDist">147.1</div>
+              </div>
+            </div>
+            <div class="canvas-tip">Seret untuk memutar · Klik chip bulan pada panel untuk melompat</div>
+          </div>
+        </div>
+        <aside class="lab-panel">
+          <div class="panel">
+            <div class="panel-head"><span data-icon="orbit"></span>KONTROL REVOLUSI</div>
+            <div class="panel-body">
+              <div class="ctrl-grid">
+                <button class="btn cyan span2" id="revPlay" data-icon="play"><span>PUTAR</span></button>
+                <div class="crow" style="grid-column:span 2">
+                  <span class="lbl">Kecepatan</span>
+                  <input type="range" class="sl" id="revSpeed" min="5" max="90" step="5" value="20">
+                  <span class="val" id="revSpeedVal">20 hari/dtk</span>
+                </div>
+                <div class="crow" style="grid-column:span 2">
+                  <span class="lbl">Posisi Bumi</span>
+                  <input type="range" class="sl" id="revSlider" min="0" max="365" step="1" value="3">
+                  <span class="val" id="revPosVal">hari</span>
+                </div>
+                <button class="btn small ghost" id="revTglOrbit">GARIS ORBIT</button>
+                <button class="btn small ghost" id="revTglLabel">LABEL BULAN</button>
+                <button class="btn small ghost span2" id="revTglDist">GARIS JARAK</button>
+                <button class="btn small amber span2" id="revReset" data-icon="reset"><span>RESET SIMULASI</span></button>
+              </div>
+              <div style="margin-top:10px">
+                <div class="lbl" style="font-family:var(--font-ui);font-weight:600;font-size:12px;color:var(--ink2);margin-bottom:5px">PILIH BULAN:</div>
+                <div class="chips" id="revMonths">
+                  <button class="chip" data-m="0">Jan</button><button class="chip" data-m="1">Feb</button>
+                  <button class="chip" data-m="2">Mar</button><button class="chip" data-m="3">Apr</button>
+                  <button class="chip" data-m="4">Mei</button><button class="chip" data-m="5">Jun</button>
+                  <button class="chip" data-m="6">Jul</button><button class="chip" data-m="7">Agu</button>
+                  <button class="chip" data-m="8">Sep</button><button class="chip" data-m="9">Okt</button>
+                  <button class="chip" data-m="10">Nov</button><button class="chip" data-m="11">Des</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><span data-icon="eye"></span>INFORMASI POSISI</div>
+            <div class="panel-body" id="revInfo"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><span data-icon="bulb"></span>REVOLUSI BUMI</div>
+            <div class="panel-body">
+              <div class="kv"><span>Revolusi</span><b>Gerak Bumi mengelilingi Matahari</b></div>
+              <div class="kv"><span>Lintasan (orbit)</span><b>Berbentuk elips</b></div>
+              <div class="kv"><span>Durasi</span><b class="hl">365,25 hari / 1 tahun</b></div>
+              <div class="kv"><span>Penyebab</span><b>Gravitasi Matahari (terbesar di tata surya)</b></div>
+              <div class="kv"><span>Perihelion</span><b>Titik terdekat — Januari</b></div>
+              <div class="kv"><span>Aphelion</span><b>Titik terjauh — Juli</b></div>
+              <div class="note" style="margin-top:9px">
+                <span data-icon="info"></span>
+                <span>Bentuk elips pada simulasi <b>diperbesar</b> agar jelas terlihat; jarak nyata tertulis pada panel
+                (*data pengayaan). Menurutmu, apa yang terjadi di Bumi saat berada di kedua titik tersebut?</span>
+              </div>
+            </div>
+          </div>
+          <div class="note warn">
+            <span data-icon="warn"></span>
+            <span><b>Ingat!</b> Pergantian musim <b>bukan</b> karena jarak Bumi–Matahari.
+            Buktikan di <b>Lab Pergantian Musim</b>: musim terjadi karena kemiringan sumbu Bumi.</span>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ HALAMAN 06 — LAB ZONA WAKTU ============ -->
+    <section class="page" id="p06">
+      <div class="lab-layout">
+        <div class="lab-view">
+          <div class="canvas-hold scan">
+            <canvas id="p06Canvas"></canvas>
+            <div class="canvas-tip">Klik pin kota pada bola Bumi · Seret untuk memutar · Cubit untuk zoom</div>
+          </div>
+        </div>
+        <aside class="lab-panel">
+          <div class="panel">
+            <div class="panel-head"><span data-icon="clock"></span>JAM WILAYAH TERPILIH</div>
+            <div class="panel-body">
+              <div class="zk-clock" id="zkClock">09.00</div>
+              <div class="zk-city" id="zkCity">JAKARTA</div>
+              <div class="zk-offset" id="zkOffset">WIB — GMT+7</div>
+              <div class="mini-clocks" id="zkMinis" style="margin-top:10px"></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><span data-icon="gauge"></span>KONTROL WAKTU</div>
+            <div class="panel-body">
+              <div class="crow">
+                <span class="lbl">Waktu simulasi</span>
+                <input type="range" class="sl" id="zkTime" min="0" max="24" step="0.5" value="9">
+                <span class="val" id="zkTimeVal">09.00 WIB</span>
+              </div>
+              <div class="ctrl-grid">
+                <button class="btn small cyan span2" id="zkPlay" data-icon="play"><span>JALANKAN WAKTU</span></button>
+                <button class="btn small ghost span2" id="zkTglLabel">LABEL KOTA</button>
+                <button class="btn small amber span2" id="zkReset" data-icon="reset"><span>RESET</span></button>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><span data-icon="pin"></span>PETA ZONA WAKTU INDONESIA</div>
+            <div class="panel-body">
+              <div class="zk-map" id="zkMap"></div>
+              <div class="chips" id="zkChips" style="margin-top:10px"></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><span data-icon="eye"></span>PANEL PENGAMATAN</div>
+            <div class="panel-body" id="zkSelisih"></div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><span data-icon="bulb"></span>MENGAPA BERBEDA WAKTU?</div>
+            <div class="panel-body">
+              <div class="kv"><span>1 putaran Bumi</span><b>360° dalam 24 jam</b></div>
+              <div class="kv"><span>Dalam 1 jam</span><b class="hl">Bumi berputar 15°</b></div>
+              <div class="kv"><span>Garis bujur</span><b>Dibagi setiap 15° → 24 zona waktu</b></div>
+              <div class="kv"><span>Patokan dunia</span><b>Greenwich (0°), Inggris</b></div>
+              <div class="kv"><span>Indonesia</span><b>3 zona: WIB (+7), WITA (+8), WIT (+9)</b></div>
+              <div class="note purple" style="margin-top:9px">
+                <span data-icon="bulb"></span>
+                <span>Setiap pergeseran <b>15°</b> bujur = penambahan waktu <b>1 jam</b> dari waktu Greenwich.
+                Indonesia terbagi tiga zona karena bentuknya yang luas dari barat ke timur.</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ HALAMAN 07 — LAB MUSIM ============ -->
+    <section class="page" id="p07">
+      <div class="lab-layout">
+        <div class="lab-view">
+          <div class="canvas-hold scan">
+            <canvas id="p07Canvas"></canvas>
+            <div class="hud tl">
+              <div class="hud-card">
+                <div class="hud-label">BULAN PENGAMATAN</div>
+                <div class="hud-value" id="msBulan">DESEMBER</div>
+              </div>
+            </div>
+            <div class="canvas-tip">Sumbu Bumi selalu miring ke arah yang sama · Seret untuk memutar</div>
+          </div>
+        </div>
+        <aside class="lab-panel">
+          <div class="panel">
+            <div class="panel-head"><span data-icon="season"></span>KONTROL PENGAMATAN</div>
+            <div class="panel-body">
+              <div class="ctrl-grid">
+                <button class="btn cyan span2" id="msPlay" data-icon="play"><span>PUTAR REVOLUSI</span></button>
+                <div class="crow" style="grid-column:span 2">
+                  <span class="lbl">Posisi bulan</span>
+                  <input type="range" class="sl" id="msSlider" min="0" max="11" step="1" value="11">
+                </div>
+                <button class="btn small ghost" id="msTglRay">SINAR MATAHARI</button>
+                <button class="btn small ghost" id="msTglLabel">LABEL BULAN</button>
+                <button class="btn small amber span2" id="msReset" data-icon="reset"><span>RESET</span></button>
+              </div>
+              <div style="margin-top:10px">
+                <div class="lbl" style="font-family:var(--font-ui);font-weight:600;font-size:12px;color:var(--ink2);margin-bottom:5px">PILIH BULAN:</div>
+                <div class="chips" id="msMonths">
+                  <button class="chip" data-m="0">Jan</button><button class="chip" data-m="1">Feb</button>
+                  <button class="chip" data-m="2">Mar</button><button class="chip" data-m="3">Apr</button>
+                  <button class="chip" data-m="4">Mei</button><button class="chip" data-m="5">Jun</button>
+                  <button class="chip" data-m="6">Jul</button><button class="chip" data-m="7">Agu</button>
+                  <button class="chip" data-m="8">Sep</button><button class="chip" data-m="9">Okt</button>
+                  <button class="chip" data-m="10">Nov</button><button class="chip on" data-m="11">Des</button>
+                </div>
+              </div>
+              <div style="margin-top:10px">
+                <div class="lbl" style="font-family:var(--font-ui);font-weight:600;font-size:12px;color:var(--ink2);margin-bottom:5px">SUDUT PANDANG:</div>
+                <div class="chips" id="msHemi">
+                  <button class="chip on" data-h="both">Keduanya</button>
+                  <button class="chip" data-h="north">Dari Kutub Utara</button>
+                  <button class="chip" data-h="south">Dari Kutub Selatan</button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><span data-icon="eye"></span>MUSIM SAAT INI</div>
+            <div class="panel-body">
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
+                <div id="msMusimU"></div>
+                <div id="msMusimS"></div>
+              </div>
+              <div class="meter"><span class="ml">Sinar di B. Utara</span><span class="mtrack"><span class="mfill" id="msFillU"></span></span><span class="mv" id="msValU">50%</span></div>
+              <div class="meter"><span class="ml">Sinar di B. Selatan</span><span class="mtrack"><span class="mfill warm" id="msFillS"></span></span><span class="mv" id="msValS">50%</span></div>
+              <div class="note" style="margin-top:8px" id="msKet"></div>
+            </div>
+          </div>
+          <div class="panel">
+            <div class="panel-head"><span data-icon="bulb"></span>MENGAPA MUSIM BERGANTI?</div>
+            <div class="panel-body">
+              <div class="kv"><span>Penyebab</span><b>Revolusi Bumi + kemiringan sumbu</b></div>
+              <div class="kv"><span>Sumbu Bumi</span><b>Tidak tegak lurus — sedikit miring</b></div>
+              <div class="kv"><span>Akibat</span><b>Tidak semua daerah mendapat sinar Matahari sama banyak</b></div>
+              <div class="kv"><span>Daerah khatulistiwa</span><b>Sinar stabil → hanya 2 musim (kemarau &amp; hujan)</b></div>
+              <div class="note warn" style="margin-top:9px">
+                <span data-icon="warn"></span>
+                <span><b>Awas miskonsepsi!</b> Musim <b>bukan</b> karena jarak Bumi–Matahari.
+                Saat musim dingin belahan Utara (Desember), Bumi justru sedang <b>dekat perihelion</b> —
+                titik terdekatnya dengan Matahari!</span>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- ============ HALAMAN 08 — RUANG EKSPERIMEN ============ -->
+    <section class="page" id="p08">
+      <div id="expHub">
+        <div class="home-head">
+          <h1>RUANG <span>EKSPERIMEN VIRTUAL</span></h1>
+          <p>Pilih percobaan, jalankan kontrolnya, ubah variabelnya, lalu tarik kesimpulan!</p>
+        </div>
+        <div class="exp-grid" id="expCards"></div>
+      </div>
+
+      <!-- ===== EKSPERIMEN 1 ===== -->
+      <div class="exp-view hidden" id="view-e1">
+        <div class="exp-wrap">
+          <div class="exp-head">
+            <button class="btn small ghost" data-back-hub data-icon="chevL"><span>SEMUA PERCOBAAN</span></button>
+            <div class="exp-goal">
+              <span class="eg-tag">EKSPERIMEN 1<br>TUJUAN</span>
+              <p>Membuat <b>model Matahari, Bumi, dan Bulan</b> lalu mengamati posisi serta pergerakan ketiganya —
+              seperti kegiatan <i>Ayo Menyelidiki</i> di buku (alat peraga kancing).</p>
+            </div>
+          </div>
+          <div class="lab-layout">
+            <div class="lab-view">
+              <div class="canvas-hold scan">
+                <canvas id="exp1Canvas"></canvas>
+                <div class="canvas-tip">Seret untuk memutar · Cubit / roda tetikus untuk zoom</div>
+              </div>
+            </div>
+            <aside class="lab-panel">
+              <div class="panel">
+                <div class="panel-head"><span data-icon="planet"></span>ALAT VIRTUAL</div>
+                <div class="panel-body">
+                  <div class="kv"><span>Objek</span><b>Matahari · Bumi · Bulan (model 3D)</b></div>
+                  <div class="crow">
+                    <span class="lbl">Sudut Bulan</span>
+                    <input type="range" class="sl" id="e1MoonSlider" min="0" max="359" step="1" value="0">
+                    <span class="val" id="e1Sudut">0°</span>
+                  </div>
+                  <div class="ctrl-grid">
+                    <button class="btn small cyan" id="e1Auto" data-icon="play"><span>ORBIT OTOMATIS</span></button>
+                    <button class="btn small ghost on" id="e1Spin">PUTAR BUMI</button>
+                    <button class="btn small amber span2" id="e1Reset" data-icon="reset"><span>RESET</span></button>
+                  </div>
+                </div>
+              </div>
+              <div class="panel">
+                <div class="panel-head"><span data-icon="eye"></span>HASIL PENGAMATAN</div>
+                <div class="panel-body" id="e1Hasil"></div>
+              </div>
+              <button class="btn green" data-simpulan="simp-e1" data-icon="bulb"><span>LIHAT KESIMPULAN</span></button>
+              <div class="note good hidden" id="simp-e1">
+                <span data-icon="check"></span>
+                <span><b>Kesimpulan:</b> Bumi <b>berputar pada porosnya</b> (rotasi) sekaligus <b>mengelilingi Matahari</b> (revolusi),
+                sedangkan Bulan <b>mengorbit Bumi</b> selama 27 hari 8 jam — dan ikut mengelilingi Matahari bersama Bumi.
+                Karena durasi rotasi Bulan sama dengan revolusinya, sisi Bulan yang menghadap Bumi <b>selalu sama</b>.</span>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== EKSPERIMEN 2 ===== -->
+      <div class="exp-view hidden" id="view-e2">
+        <div class="exp-wrap">
+          <div class="exp-head">
+            <button class="btn small ghost" data-back-hub data-icon="chevL"><span>SEMUA PERCOBAAN</span></button>
+            <div class="exp-goal">
+              <span class="eg-tag">EKSPERIMEN 2<br>TUJUAN</span>
+              <p>Menyelidiki <b>siang dan malam</b> dengan senter dan bola Bumi — seperti kegiatan
+              <i>Ayo Mengamati</i> di buku (senter + globe + miniatur orang).</p>
+            </div>
+          </div>
+          <div class="lab-layout">
+            <div class="lab-view">
+              <div class="canvas-hold scan">
+                <canvas id="exp2Canvas"></canvas>
+                <div class="canvas-tip">Senter = Matahari · Seret untuk memutar pandangan</div>
+              </div>
+            </div>
+            <aside class="lab-panel">
+              <div class="panel">
+                <div class="panel-head"><span data-icon="senter"></span>ALAT VIRTUAL</div>
+                <div class="panel-body">
+                  <div class="kv"><span>Objek</span><b>Bola Bumi + poros + senter + miniatur orang</b></div>
+                  <div class="crow">
+                    <span class="lbl">Arah senter</span>
+                    <input type="range" class="sl" id="e2Senter" min="0" max="359" step="1" value="0">
+                    <span class="val" id="e2Arah">0°</span>
+                  </div>
+                  <div class="ctrl-grid">
+                    <button class="btn small cyan" id="e2Spin" data-icon="play"><span>PUTAR BUMI</span></button>
+                    <button class="btn small ghost on" id="e2Org">MINIATUR ORANG</button>
+                    <button class="btn small amber span2" id="e2Reset" data-icon="reset"><span>RESET</span></button>
+                  </div>
+                </div>
+              </div>
+              <div class="panel">
+                <div class="panel-head"><span data-icon="eye"></span>HASIL PENGAMATAN</div>
+                <div class="panel-body" id="e2Hasil"></div>
+              </div>
+              <button class="btn green" data-simpulan="simp-e2" data-icon="bulb"><span>LIHAT KESIMPULAN</span></button>
+              <div class="note good hidden" id="simp-e2">
+                <span data-icon="check"></span>
+                <span><b>Kesimpulan:</b> Area bola Bumi yang <b>terkena senter</b> menunjukkan waktu <b>siang</b>;
+                daerah yang tidak terkena senter mengalami <b>malam</b>. Karena rotasi Bumi (±24 jam sekali putaran),
+                setiap daerah bergantian mengalami siang dan malam.</span>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== EKSPERIMEN 3 ===== -->
+      <div class="exp-view hidden" id="view-e3">
+        <div class="exp-wrap">
+          <div class="exp-head">
+            <button class="btn small ghost" data-back-hub data-icon="chevL"><span>SEMUA PERCOBAAN</span></button>
+            <div class="exp-goal">
+              <span class="eg-tag">EKSPERIMEN 3<br>TUJUAN</span>
+              <p>Mengamati <b>jam Matahari</b>: perubahan bayangan pensil sepanjang hari,
+              lalu menghubungkannya dengan <b>gerak semu harian Matahari</b> — seperti kegiatan di buku.</p>
+            </div>
+          </div>
+          <div class="lab-layout">
+            <div class="lab-view">
+              <div class="canvas-hold" style="display:flex;align-items:center;justify-content:center" id="e3Svg"></div>
+            </div>
+            <aside class="lab-panel">
+              <div class="panel">
+                <div class="panel-head"><span data-icon="sunrise"></span>ALAT VIRTUAL</div>
+                <div class="panel-body">
+                  <div class="kv"><span>Objek</span><b>Papan + pensil + sinar Matahari</b></div>
+                  <div class="crow">
+                    <span class="lbl">Waktu</span>
+                    <input type="range" class="sl" id="e3Time" min="6" max="18" step="0.25" value="9">
+                    <span class="val" id="e3Jam">09.00</span>
+                  </div>
+                  <div class="ctrl-grid">
+                    <button class="btn small cyan" id="e3Mark" data-icon="pin"><span>TANDAI BAYANGAN</span></button>
+                    <button class="btn small amber" id="e3Clear" data-icon="reset"><span>HAPUS TANDA</span></button>
+                  </div>
+                </div>
+              </div>
+              <div class="panel">
+                <div class="panel-head"><span data-icon="eye"></span>HASIL PENGAMATAN</div>
+                <div class="panel-body">
+                  <div id="e3Hasil"></div>
+                  <table class="obs-table" style="margin-top:8px">
+                    <thead><tr><th>JAM</th><th>PANJANG BAYANGAN</th><th>ARAH</th></tr></thead>
+                    <tbody id="e3Table"></tbody>
+                  </table>
+                </div>
+              </div>
+              <button class="btn green" data-simpulan="simp-e3" data-icon="bulb"><span>LIHAT KESIMPULAN</span></button>
+              <div class="note good hidden" id="simp-e3">
+                <span data-icon="check"></span>
+                <span><b>Kesimpulan:</b> Bayangan pensil <b>berubah panjang dan arahnya</b> sepanjang hari —
+                pagi panjang, tengah hari pendek, sore kembali panjang. Itu karena Matahari <b>tampak</b> bergerak
+                dari timur ke barat. Padahal Matahari diam — <b>Bumi yang berputar</b>. Peristiwa ini disebut
+                <b>gerak semu harian Matahari</b>.</span>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== EKSPERIMEN 4 ===== -->
+      <div class="exp-view hidden" id="view-e4">
+        <div class="exp-wrap">
+          <div class="exp-head">
+            <button class="btn small ghost" data-back-hub data-icon="chevL"><span>SEMUA PERCOBAAN</span></button>
+            <div class="exp-goal">
+              <span class="eg-tag">EKSPERIMEN 4<br>TUJUAN</span>
+              <p>Mengamati <b>fase Bulan</b>: mengubah posisi Bulan mengelilingi Bumi dan melihat
+              perubahannya — seperti kegiatan <i>kalender Bulan</i> di buku.</p>
+            </div>
+          </div>
+          <div class="lab-layout">
+            <div class="lab-view" style="flex-direction:row;gap:12px">
+              <div class="canvas-hold" style="display:flex;align-items:center;justify-content:center;flex:1.6" id="e4Svg"></div>
+              <div class="panel" style="flex:1;align-self:stretch;display:flex;flex-direction:column">
+                <div class="panel-head"><span data-icon="eye"></span>PANDANGAN DARI BUMI</div>
+                <div class="panel-body" style="flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center">
+                  <div class="phase-inset" id="e4Phase"></div>
+                  <div class="phase-name" id="e4Name">BULAN BARU</div>
+                  <div class="phase-desc" id="e4Desc"></div>
+                </div>
+              </div>
+            </div>
+            <aside class="lab-panel narrow" style="width:330px;flex-basis:330px">
+              <div class="panel">
+                <div class="panel-head"><span data-icon="moon"></span>ALAT VIRTUAL</div>
+                <div class="panel-body">
+                  <div class="kv"><span>Objek</span><b>Matahari · Bumi · Bulan</b></div>
+                  <div class="crow">
+                    <span class="lbl">Sudut Bulan</span>
+                    <input type="range" class="sl" id="e4Slider" min="0" max="359" step="1" value="0">
+                    <span class="val" id="e4Sudut">0°</span>
+                  </div>
+                  <div class="ctrl-grid">
+                    <button class="btn small amber span2" id="e4Reset" data-icon="reset"><span>RESET</span></button>
+                  </div>
+                </div>
+              </div>
+              <div class="note purple">
+                <span data-icon="bulb"></span>
+                <span>Bulan menempuh satu putaran mengelilingi Bumi dalam <b>27 hari 8 jam</b>.
+                Bentuk Bulan tampak berubah karena <b>perubahan posisinya terhadap Matahari</b>
+                sebagai akibat revolusi Bulan terhadap Bumi.</span>
+              </div>
+              <button class="btn green" data-simpulan="simp-e4" data-icon="bulb"><span>LIHAT KESIMPULAN</span></button>
+              <div class="note good hidden" id="simp-e4">
+                <span data-icon="check"></span>
+                <span><b>Kesimpulan:</b> Perubahan bentuk Bulan (fase) terjadi karena <b>posisi Bulan
+                terhadap Matahari terus berubah</b> saat ia berevolusi mengelilingi Bumi. Saat Bulan berada
+                di antara Matahari dan Bumi, Bulan tak nampak; saat Bumi di antaranya, terlihat bulat sempurna.</span>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+
+      <!-- ===== EKSPERIMEN 5 ===== -->
+      <div class="exp-view hidden" id="view-e5">
+        <div class="exp-wrap">
+          <div class="exp-head">
+            <button class="btn small ghost" data-back-hub data-icon="chevL"><span>SEMUA PERCOBAAN</span></button>
+            <div class="exp-goal">
+              <span class="eg-tag">EKSPERIMEN 5<br>TUJUAN</span>
+              <p>Mengubah posisi Bumi pada orbit dan mengamati <b>penerimaan cahaya Matahari</b>
+              di belahan Bumi Utara dan Selatan — seperti Gambar 6.9 di buku, tetapi interaktif.</p>
+            </div>
+          </div>
+          <div class="lab-layout">
+            <div class="lab-view">
+              <div class="canvas-hold" style="display:flex;align-items:center;justify-content:center" id="e5Svg"></div>
+            </div>
+            <aside class="lab-panel narrow" style="width:330px;flex-basis:330px">
+              <div class="panel">
+                <div class="panel-head"><span data-icon="season"></span>ALAT VIRTUAL</div>
+                <div class="panel-body">
+                  <div class="kv"><span>Objek</span><b>Diagram orbit + Bumi bersumbu miring</b></div>
+                  <div class="crow">
+                    <span class="lbl">Posisi Bumi</span>
+                    <input type="range" class="sl" id="e5Slider" min="0" max="11" step="1" value="11">
+                    <span class="val" id="e5Bulan">DES</span>
+                  </div>
+                  <div class="ctrl-grid">
+                    <button class="btn small cyan span2" id="e5Play" data-icon="play"><span>PUTAR</span></button>
+                  </div>
+                  <div class="chips" style="margin-top:8px">
+                    <button class="chip" data-m="2">Mar</button>
+                    <button class="chip" data-m="5">Jun</button>
+                    <button class="chip" data-m="8">Sep</button>
+                    <button class="chip" data-m="11">Des</button>
+                  </div>
+                </div>
+              </div>
+              <div class="panel">
+                <div class="panel-head"><span data-icon="eye"></span>HASIL PENGAMATAN</div>
+                <div class="panel-body">
+                  <div id="e5Hasil"></div>
+                  <div class="meter"><span class="ml">Sinar di B. Utara</span><span class="mtrack"><span class="mfill" id="e5FillU"></span></span></div>
+                  <div class="meter"><span class="ml">Sinar di B. Selatan</span><span class="mtrack"><span class="mfill warm" id="e5FillS"></span></span></div>
+                </div>
+              </div>
+              <button class="btn green" data-simpulan="simp-e5" data-icon="bulb"><span>LIHAT KESIMPULAN</span></button>
+              <div class="note good hidden" id="simp-e5">
+                <span data-icon="check"></span>
+                <span><b>Kesimpulan:</b> Sumbu Bumi yang <b>miring dengan arah tetap</b> menyebabkan belahan Bumi
+                bergantian menerima sinar Matahari lebih banyak saat Bumi berevolusi. Itulah penyebab
+                <b>pergantian musim</b> — bukan jarak Bumi ke Matahari. Daerah khatulistiwa menerima sinar yang
+                cenderung stabil sehingga hanya mengalami <b>dua musim</b>: kemarau dan hujan.</span>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HALAMAN 09 — EVALUASI ============ -->
+    <section class="page" id="p09">
+      <div class="quiz-wrap" id="quizArea"></div>
+    </section>
+
+    <!-- ============ HALAMAN 10 — REFLEKSI ============ -->
+    <section class="page" id="p10">
+      <div class="refl-card">
+        <div class="panel">
+          <div class="panel-head"><span data-icon="journal"></span>REFLEKSI PENELITI MUDA</span></div>
+          <div class="panel-body">
+            <div class="refl-q"><span class="refl-num">1</span><input type="text" id="reflQ1" placeholder="Apa hal baru yang kamu pelajari hari ini?"></div>
+            <div class="refl-q"><span class="refl-num">2</span><input type="text" id="reflQ2" placeholder="Bagian laboratorium mana yang paling kamu sukai? Mengapa?"></div>
+            <div class="refl-q"><span class="refl-num">3</span><input type="text" id="reflQ3" placeholder="Hal apa tentang rotasi/revolusi Bumi yang masih membingungkan?"></div>
+            <div class="refl-q"><span class="refl-num">4</span><input type="text" id="reflQ4" placeholder="Percobaan mana yang paling menarik? Apa yang kamu temukan?"></div>
+            <div class="refl-q"><span class="refl-num">5</span><input type="text" id="reflQ5" placeholder="Apa yang ingin kamu selidiki lebih lanjut?"></div>
+            <div style="text-align:center;margin-top:12px">
+              <h4 style="font-family:var(--font-head);font-size:11px;letter-spacing:2px;color:var(--cyan);margin-bottom:9px">BAGAIMANA PERASAANMU SAAT BELAJAR HARI INI?</h4>
+              <div class="feel-grid" id="feelGrid"></div>
+            </div>
+            <div class="refl-q" style="margin-top:10px">
+              <span class="refl-num" style="background:none;border:none;font-family:var(--font-ui);color:var(--cyan);width:auto" data-icon="journal"></span>
+              <textarea id="reflNote" rows="3" placeholder="Tuliskan pengalaman menarikmu selama menyelidiki di Laboratorium Maya…"></textarea>
+            </div>
+            <div style="display:flex;justify-content:center;gap:12px;margin-top:14px">
+              <button class="btn green" id="btnReflSave" data-icon="save"><span>SIMPAN REFLEKSI</span></button>
+              <button class="btn ghost" data-nav="p01" data-icon="home"><span>KE BERANDA</span></button>
+            </div>
+          </div>
+        </div>
+        <div class="note">
+          <span data-icon="info"></span>
+          <span>Refleksi tersimpan di perangkatmu saja dan akan kosong kembali saat aplikasi dibuka ulang —
+          ini jurnal per sesi belajar. Tidak ada jawaban yang salah di sini!</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HALAMAN 11 — KREDIT & REFERENSI ============ -->
+    <section class="page" id="p11">
+      <div class="credit-wrap">
+        <div class="panel credit-book">
+          <h3>REFERENSI MATERI</h3>
+          <p>Diadaptasi dari buku: Amalia Fitri, Ati Haviati Oktora, Ekatannia Tresnasari, dan Maria Jeanindya Wahyudi. (2025).
+          <i>Ilmu Pengetahuan Alam dan Sosial untuk SD/MI Kelas VI</i>.
+          Kementerian Pendidikan Dasar dan Menengah Republik Indonesia.
+          ISBN 978-634-00-2164-6. — Bab 6: <i>Mengembara di Jagat Raya</i> (halaman 141–162).</p>
+        </div>
+        <div class="credit-cols">
+          <div class="panel credit-card">
+            <h3>TENTANG MEDIA</h3>
+            <p><b>Laboratorium Maya IPAS: Rotasi dan Revolusi Bumi</b> — laboratorium sains digital interaktif
+            untuk siswa SD/MI kelas VI pada materi Bab 6: Matahari, Bumi, Bulan, gerak rotasi dan revolusi Bumi,
+            serta pengaruhnya bagi kehidupan manusia.</p>
+          </div>
+          <div class="panel credit-card">
+            <h3>TUJUAN PEMBELAJARAN</h3>
+            <ul>
+              <li>Menganalisis sistem tata surya dengan <b>Matahari sebagai pusatnya</b> serta posisi Bumi, Bulan, dan Matahari.</li>
+              <li>Menjelaskan <b>rotasi Bumi</b> (23 jam 56 menit) dan akibatnya: siang-malam, gerak semu harian Matahari, dan perbedaan waktu.</li>
+              <li>Menjelaskan <b>revolusi Bumi</b> (365,25 hari) dan pengaruhnya bagi kehidupan manusia, termasuk <b>pergantian musim</b>.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="panel credit-card">
+          <h3>SUMBER ASET</h3>
+          <p><b>Model 3D &amp; tekstur planet</b> — digambar secara prosedural khusus untuk media ini;
+          bentuk daratan berdasarkan data peta dunia <i>land-110m</i> (world-atlas / Natural Earth, domain publik).
+          <b>Ikon</b> — vektor SVG orisinal. <b>Font</b> — Orbitron, Rajdhani, dan Nunito (masing-masing SIL Open Font License 1.1), dimuat lokal.
+          <b>Audio</b> — musik latar dan efek suara <b>dibuat dengan AI</b>; narasi menggunakan rekaman suara
+          TTS AI bahasa Indonesia (id-ID-ArdiNeural) yang tersimpan lokal. <b>Foto pengembang</b> — milik pengembang sendiri.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ HALAMAN 12 — PENGEMBANG ============ -->
+    <section class="page" id="p12">
+      <div class="credit-wrap">
+        <div class="panel">
+          <div class="panel-head"><span data-icon="user"></span>PENGEMBANG</div>
+          <div class="panel-body">
+            <div class="dev-flex">
+              <div class="dev-ava">
+                <img src="assets/dev/dev-photo.png" alt="Foto Titik Ambarwati, S.Pd.">
+                <span>FOTO PENGEMBANG</span>
+              </div>
+              <div class="dev-id">
+                <h4>IDENTITAS PENGEMBANG</h4>
+                <div class="dev-rowline"><span>Nama</span><b>Titik Ambarwati, S.Pd.</b></div>
+                <div class="dev-rowline"><span>Instansi</span><b>SD Negeri 1 Petuguran</b></div>
+                <div class="dev-rowline"><span>Peran</span><b>Guru &amp; Pengembang Media Pembelajaran</b></div>
+                <div class="dev-rowline"><span>Media</span><b>Laboratorium Maya IPAS — Rotasi dan Revolusi Bumi · IPAS SD Kelas VI</b></div>
+                <div class="soc-wrap">
+                  <a class="soc-btn yt" href="https://www.youtube.com/@bugurutitik" target="_blank" rel="noopener" data-icon="yt">YouTube @bugurutitik</a>
+                  <a class="soc-btn tt" href="https://www.tiktok.com/@bugurutitik" target="_blank" rel="noopener" data-icon="tt">TikTok @bugurutitik</a>
+                  <a class="soc-btn ig" href="https://www.instagram.com/bugurutitik" target="_blank" rel="noopener" data-icon="ig">Instagram @bugurutitik</a>
+                </div>
+                <p class="ref-note" style="margin-top:9px;font-size:11.5px;color:var(--ink3)">
+                  Klik tautan untuk membuka akun media sosial pengembang (memerlukan koneksi internet).</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="info-tip">
+          Semoga media ini membantu pembelajaran IPAS menjadi lebih interaktif, bermakna, dan menyenangkan bagi para siswa!
+        </div>
+      </div>
+    </section>
+
+    </main>
+  </div>
+</div>
+
+<!-- ================= NOTIFIKASI & MODAL ================= -->
+<div id="toastWrap"></div>
+<div id="modalRoot" class="modal-root" aria-hidden="true"></div>
+
+<!-- ================= MINTA PUTAR LAYAR ================= -->
+<div id="rotateOverlay">
+  <div class="ro-icon" data-icon="rotate"></div>
+  <h2>PUTAR PERANGKATMU</h2>
+  <p>Laboratorium Maya dirancang untuk tampilan mendatar (landscape).
+  Putar tabel atau HP-mu ke posisi horizontal untuk melanjutkan menyelidiki.</p>
+</div>
+
+<script src="js/three.min.js?v=1"></script>
+<script src="js/icons.js?v=2"></script>
+<script src="js/texture_data.js?v=1"></script>
+<script src="js/storage.js?v=1"></script>
+<script src="js/narasi_map.js?v=4"></script>
+<script src="js/audio.js?v=1"></script>
+<script src="js/lab3d.js?v=5"></script>
+<script src="js/pages.js?v=5"></script>
+<script src="js/galeri.js?v=3"></script>
+<script src="js/rotasi.js?v=3"></script>
+<script src="js/revolusi.js?v=3"></script>
+<script src="js/zona.js?v=3"></script>
+<script src="js/musim.js?v=3"></script>
+<script src="js/eksperimen.js?v=7"></script>
+<script src="js/evaluasi.js?v=1"></script>
+<script src="js/app.js?v=4"></script>
+<script>
+/* Bintang latar panggung — versi tema terang: titik lembut biru langit */
+(function () {
+  const cv = document.getElementById('starbg');
+  const ctx = cv.getContext('2d');
+  let stars = [], W = 1280, H = 720;
+  function init() {
+    cv.width = W; cv.height = H;
+    stars = [];
+    for (let i = 0; i < 150; i++) {
+      stars.push({
+        x: Math.random() * W, y: Math.random() * H,
+        r: Math.random() * 1.6 + 0.4,
+        p: Math.random() * Math.PI * 2,
+        s: 0.4 + Math.random() * 1.2
+      });
+    }
+  }
+  function draw(t) {
+    ctx.clearRect(0, 0, W, H);
+    for (const st of stars) {
+      const a = 0.10 + 0.22 * (0.5 + 0.5 * Math.sin(t * 0.001 * st.s + st.p));
+      ctx.beginPath();
+      ctx.arc(st.x, st.y, st.r, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(70,130,190,${a.toFixed(3)})`;
+      ctx.fill();
+    }
+    requestAnimationFrame(draw);
+  }
+  init();
+  requestAnimationFrame(draw);
+})();
+</script>
+</body>
+</html>
