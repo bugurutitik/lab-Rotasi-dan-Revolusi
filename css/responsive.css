@@ -1,0 +1,34 @@
+/* ============================================================
+   LABORATORIUM MAYA IPAS — responsive.css
+   Panggung utama diskalakan app.js (fit stage) sehingga pas di
+   IFP, laptop, tablet, dan HP landscape. Berkas ini menangani
+   mode potret (minta putar perangkat), pointer kasar, dan
+   penyesuaian kecil layar sempit.
+   ============================================================ */
+
+/* Mode potret pada layar kecil/sedang: minta pengguna memutar
+   perangkat (aplikasi dirancang untuk tampilan landscape). */
+@media (orientation:portrait) and (max-width:920px){
+  #rotateOverlay{display:flex}
+}
+
+/* Pointer kasar (sentuhan IFP/tablet/HP): target lebih besar */
+@media (pointer:coarse){
+  .btn{padding:12px 20px}
+  .ctlbtn{width:44px;height:44px}
+  .sb-item{padding:9px 2px 7px}
+  .opt{padding:13px 16px}
+  .chip{padding:8px 14px}
+  input[type=range].sl{height:32px}
+  input[type=range].sl::-webkit-slider-thumb{width:22px;height:22px;margin-top:-8px}
+}
+
+/* Layar pendek landscape (HP): panggung tanpa bayangan tebal */
+@media (max-height:480px){
+  #stage{box-shadow:0 0 0 1px rgba(0,229,255,.14)}
+}
+
+/* Sempit: panel lab lebih ramping */
+@media (max-width:1120px){
+  .lab-panel{width:370px;flex-basis:370px}
+}

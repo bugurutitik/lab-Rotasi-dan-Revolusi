@@ -1,0 +1,30 @@
+/* ============================================================
+   LABORATORIUM MAYA IPAS — animation.css
+   Animasi masuk, denyut, dan efek cahaya halus.
+   ============================================================ */
+@keyframes riseIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+.rise{animation:riseIn .45s ease backwards}
+.rise-1{animation-delay:.05s}.rise-2{animation-delay:.12s}.rise-3{animation-delay:.19s}
+.rise-4{animation-delay:.26s}.rise-5{animation-delay:.33s}.rise-6{animation-delay:.4s}
+.rise-7{animation-delay:.47s}.rise-8{animation-delay:.54s}.rise-9{animation-delay:.61s}
+
+@keyframes popIn{from{opacity:0;transform:scale(.86)}to{opacity:1;transform:scale(1)}}
+.pop-in{animation:popIn .35s cubic-bezier(.2,1.4,.4,1) backwards}
+
+@keyframes floaty{0%,100%{transform:translateY(0)}50%{transform:translateY(-8px)}}
+.floaty{animation:floaty 4.5s ease-in-out infinite}
+
+@keyframes glowPulse{0%,100%{opacity:.65}50%{opacity:1}}
+.glow-pulse{animation:glowPulse 2.4s ease-in-out infinite}
+
+@keyframes scanline{0%{transform:translateY(-100%)}100%{transform:translateY(100%)}}
+.scan{position:relative;overflow:hidden}
+.scan::after{content:'';position:absolute;left:0;right:0;height:34%;
+  background:linear-gradient(180deg,transparent,rgba(0,190,255,.045),transparent);
+  animation:scanline 7s linear infinite;pointer-events:none}
+
+@keyframes spinSlow{to{transform:rotate(360deg)}}
+.spin-slow{animation:spinSlow 14s linear infinite}
+
+@keyframes blinkDot{0%,100%{opacity:1}50%{opacity:.25}}
+.blink{animation:blinkDot 1.4s ease-in-out infinite}
