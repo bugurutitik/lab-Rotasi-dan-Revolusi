@@ -106,7 +106,12 @@ const Pages = (() => {
         }
       }, 12800);
     };
-    canvas.addEventListener('pointerdown', arm);
+    /* Pemicu memakai event CLICK (bukan pointerdown): pada peramban HP,
+       tekanan sentuhan (pointerdown) tidak dihitung sebagai "aktivasi
+       pengguna", sehingga musik latar & narasi yang diputar saat itu
+       ditolak kebijakan autoplay dan tidak terdengar. Event click sah
+       sebagai aktivasi pengguna di komputer maupun HP. */
+    canvas.addEventListener('click', arm);
     document.getElementById('btnMulai').addEventListener('click', () => {
       AudioSys.unlock();
       Nav.go('p01');
